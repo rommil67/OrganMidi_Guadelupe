@@ -1,8 +1,6 @@
-//Guadelupe_5_x_matrix_keyboard__8x8__witg_chip_74HC138_led_Work_
-
 //---------------------------------------------------------------------------
 //----------------------------for  signalisations work:----------------------
-// Variables will chang 
+// Variables will chang
 int ledState  = LOW;             // ledState used to set the LED
 
 // Generally, you should  use "unsigned long" for variables that hold time
@@ -13,7 +11,7 @@ unsigned long previousMillis = 0;        //  will store last time LED was update
 const  long interval = 1000;  
 //-------------------------------------------------------
 
-//  define adress pins for adressed 74HC138 
+//  define adress pins for adressed 74HC138
 #define pin_adress0 A0
 #define pin_adress1  A1
 #define pin_adress2 A2
@@ -36,9 +34,9 @@ boolean Key2_last[LiczbaKlawiszy];
 boolean Key3_last[LiczbaKlawiszy];
 boolean  Key4_last[LiczbaKlawiszy];
 boolean Key5_last[LiczbaKlawiszy];
-int pin_data[]  = {2,3,4,5,6,7,8,9}; // define data pins 
+int pin_data[]  = {2,3,4,5,6,7,8,9}; // define data pins
 
-  
+ 
 
 
 int vol = 90; //  walue velocity
@@ -67,7 +65,7 @@ int channel_off = 0x80; // kanal 1 - initial variables for midi channel
 // int channel_off = 0x87; // kanal 8
 
 void  setup()  {
-  
+ 
   Serial.begin (31250); //(31250); // setup serial for MIDI
   for (int i = 0; i <= LiczbaKlawiszy -1; i++) {
    Key[i] = 1;
@@ -86,7 +84,7 @@ void  setup()  {
   for (int  i = 0; i <= 7; i++) {
   pinMode(pin_data[i], INPUT_PULLUP);
   }
-  
+ 
   //define output pin_adress 74HC138)
     pinMode(pin_adress0, OUTPUT);
  digitalWrite(pin_adress0,  HIGH);
@@ -115,18 +113,18 @@ pinMode(LED_BUILTIN, OUTPUT);
 
 void loop()  {
 
-  
+ 
   // vol = analogRead(A5);
   // vol = map(vol, 0, 1023, 0, 127);
 
    //*****************************************
  //Obsługa man I
-  digitalWrite(  pin_E1_man1, LOW); 
+  digitalWrite(  pin_E1_man1, LOW);
   digitalWrite( pin_E1_man2, HIGH);
   digitalWrite( pin_E1_man3,  HIGH);
   digitalWrite( pin_E1_man4, HIGH);
   digitalWrite( pin_E1_man5, HIGH);//  właczenie I man do odczytu
-  
+ 
   channel_on = 0x90; // setup variable chcnell  for man. I kanal 1
   channel_off = 0x80; // ustawienie zmiennych kanału midi  dla I man. kanal 1
   digitalWrite(pin_adress0, LOW);
@@ -143,11 +141,11 @@ void loop()  {
       for  (int i = 0; i <= 7; i++) {
       Key[i+1*8] = digitalRead(pin_data[i]);
      }
-  
+ 
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1, HIGH);
   digitalWrite(pin_adress2, LOW); // read 3-st (thrid) octet
-  
+ 
       for  (int i = 0; i <= 7; i++) {
       Key[i+2*8] = digitalRead(pin_data[i]);
      }
@@ -155,7 +153,7 @@ void loop()  {
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1, HIGH);
   digitalWrite(pin_adress2,  LOW); // read 4-st (quad) octet
-  
+ 
    for (int i = 0; i <= 7; i++) {
       Key[i+3*8]  = digitalRead(pin_data[i]);
      }
@@ -185,8 +183,8 @@ void loop()  {
    for (int i =  0; i <= 7; i++) {
       Key[i+7*8] = digitalRead(pin_data[i]);
      }
-  
-  
+ 
+ 
 
 //****************************************************
 // porównywanie  odczytów i wysyłanie komunikatów midi
@@ -202,15 +200,15 @@ void loop()  {
     }
   }
   }
-  
+ 
  
  
   //*****************************************
  //Obsługa man II
-digitalWrite(  pin_E1_man1, HIGH); 
+digitalWrite(  pin_E1_man1, HIGH);
 digitalWrite( pin_E1_man2, LOW);
 digitalWrite( pin_E1_man3,  HIGH);
-digitalWrite( pin_E1_man4, HIGH); 
+digitalWrite( pin_E1_man4, HIGH);
 digitalWrite( pin_E1_man5, HIGH);//  właczenie II man do odczytu
 channel_on = 0x91; // ustawienie kanałów dla II man  - kanal 2
 channel_off = 0x81; // kanal 2
@@ -228,11 +226,11 @@ channel_off = 0x81; // kanal 2
       for  (int i = 0; i <= 7; i++) {
       Key2[i+1*8] = digitalRead(pin_data[i]);
      }
-  
+ 
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 3-st (thrid) octet
-  
+ 
       for (int i = 0; i <= 7; i++) {
       Key2[i+2*8] = digitalRead(pin_data[i]);
      }
@@ -240,7 +238,7 @@ channel_off = 0x81; // kanal 2
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 4-st (quad) octet
-  
+ 
    for (int i = 0; i <= 7; i++) {
       Key2[i+3*8] = digitalRead(pin_data[i]);
      }
@@ -270,12 +268,12 @@ channel_off = 0x81; // kanal 2
    for (int i =  0; i <= 7; i++) {
       Key2[i+7*8] = digitalRead(pin_data[i]);
      }
-  
-  
+ 
+ 
 
 //****************************************************
 // porównywanie  odczytów i wysyłanie komunikatów midi dla man II
-// 
+//
    for (int i = 0; i  <= LiczbaKlawiszy -1; i++) {
     if(Key2[i] != Key2_last[i] ) {
     if(Key2[i]  == 0)  {
@@ -289,9 +287,9 @@ channel_off = 0x81; // kanal 2
   }
 //*****************************************
   //Obsługa man III
-digitalWrite( pin_E1_man1, HIGH); 
+digitalWrite( pin_E1_man1, HIGH);
 digitalWrite( pin_E1_man2,  HIGH);
-digitalWrite( pin_E1_man3, LOW); 
+digitalWrite( pin_E1_man3, LOW);
 digitalWrite( pin_E1_man4, HIGH);
 digitalWrite(  pin_E1_man5, HIGH);// właczenie III man do odczytu
 channel_on = 0x92; // ustawienie  kanałów dla III man - kanal 3
@@ -310,27 +308,27 @@ channel_off = 0x82; // kanal 3
       for (int i = 0; i <= 7; i++) {
       Key3[i+1*8] = digitalRead(pin_data[i]);
      }
-  
+ 
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 3-st (thrid) octet
-  
+ 
       for (int i = 0; i <= 7; i++) {
-      Key3[i+6*8] = digitalRead(pin_data[i]);
+      Key3[i+2*8] = digitalRead(pin_data[i]);
      }
 
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 4-st (quad) octet
-  
+ 
    for (int i = 0; i <= 7; i++) {
-      Key3[i+7*8] = digitalRead(pin_data[i]);
+      Key3[i+3*8] = digitalRead(pin_data[i]);
      }
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1, LOW);
   digitalWrite(pin_adress2, HIGH); // read 5-st (quad) octet
    for (int i =  0; i <= 7; i++) {
-      Key3[i+2*8] = digitalRead(pin_data[i]);
+      Key3[i+4*8] = digitalRead(pin_data[i]);
      }
 
   digitalWrite(pin_adress0, HIGH);
@@ -344,21 +342,21 @@ channel_off = 0x82; // kanal 3
   digitalWrite(pin_adress1, HIGH);
   digitalWrite(pin_adress2, HIGH); // read  7-st (sext) octet
    for (int i = 0; i <= 7; i++) {
-      Key3[i+4*8] = digitalRead(pin_data[i]);
+      Key3[i+6*8] = digitalRead(pin_data[i]);
      }
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1, HIGH);
   digitalWrite(pin_adress2, HIGH); // read 8-st (sept) octet
    for (int i =  0; i <= 7; i++) {
-      Key3[i+3*8] = digitalRead(pin_data[i]);
+      Key3[i+7*8] = digitalRead(pin_data[i]);
      }
-  
-  
+ 
+ 
 
 //****************************************************
 // porównywanie  odczytów i wysyłanie komunikatów midi dla man III
-// 
-   for (int i = 0; i  <= 39; i++) {
+//
+   for (int i = 0; i  <= LiczbaKlawiszy -1; i++) {
     if(Key3[i] != Key3_last[i] ) {
     if(Key3[i]  == 0)  {
       noteOn(channel_on, 36+i, vol);
@@ -370,34 +368,21 @@ channel_off = 0x82; // kanal 3
   }
   }
 
-     for (int i = 40; i  <= LiczbaKlawiszy -1; i++) {
-    if(Key3[i] != Key3_last[i] ) {
-    if(Key3[i]  == 0)  {
-      noteOn(channel_on, 20+i, vol);
-    }
-    else  {
-      noteOn(channel_off,  20+i, 0x00);
-      noteOn(channel_off, 20+i, 0x00);
-    }
-  }
-  }
-
-
   //*****************************************
  //Obsługa man IV
-digitalWrite(  pin_E1_man1, HIGH); 
+digitalWrite(  pin_E1_man1, HIGH);
 digitalWrite( pin_E1_man2, HIGH);
-digitalWrite( pin_E1_man3,  HIGH); 
+digitalWrite( pin_E1_man3,  HIGH);
 digitalWrite( pin_E1_man4, LOW);
 digitalWrite( pin_E1_man5, HIGH);//  właczenie III man do odczytu
-channel_on = 0x92; // ustawienie kanałów dla IV  man - kanal 4
-channel_off = 0x82; // kanal 4
+channel_on = 0x93; // ustawienie kanałów dla IV  man - kanal 4
+channel_off = 0x83; // kanal 4
 
   digitalWrite(pin_adress0,  LOW);
   digitalWrite(pin_adress1, LOW);
   digitalWrite(pin_adress2, LOW);  // read 1-st (first) octet
       for (int i = 0; i <= 7; i++) {
-      Key4[i+2*8]  = digitalRead(pin_data[i]);
+      Key4[i+0*8]  = digitalRead(pin_data[i]);
      }
 
   digitalWrite(pin_adress0, HIGH);
@@ -406,19 +391,19 @@ channel_off = 0x82; // kanal 4
       for (int i = 0; i <= 7; i++) {
       Key4[i+1*8] = digitalRead(pin_data[i]);
      }
-  
+ 
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 3-st (thrid) octet
-  
+ 
       for (int i = 0; i <= 7; i++) {
-      Key4[i+4*8] = digitalRead(pin_data[i]);
+      Key4[i+2*8] = digitalRead(pin_data[i]);
      }
 
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 4-st (quad) octet
-  
+ 
    for (int i = 0; i <= 7; i++) {
       Key4[i+3*8] = digitalRead(pin_data[i]);
      }
@@ -426,7 +411,7 @@ channel_off = 0x82; // kanal 4
   digitalWrite(pin_adress1, LOW);
   digitalWrite(pin_adress2, HIGH); // read 5-st (quad) octet
    for (int i =  0; i <= 7; i++) {
-      Key4[i+0*8] = digitalRead(pin_data[i]);
+      Key4[i+4*8] = digitalRead(pin_data[i]);
      }
 
   digitalWrite(pin_adress0, HIGH);
@@ -448,12 +433,12 @@ channel_off = 0x82; // kanal 4
    for (int i =  0; i <= 7; i++) {
       Key4[i+7*8] = digitalRead(pin_data[i]);
      }
-  
-  
+ 
+ 
 
 //****************************************************
 // porównywanie  odczytów i wysyłanie komunikatów midi dla man IV
-// 
+//
    for (int i = 0; i  <= LiczbaKlawiszy -1; i++) {
     if(Key4[i] != Key4_last[i] ) {
     if(Key4[i]  == 0)  {
@@ -467,9 +452,9 @@ channel_off = 0x82; // kanal 4
   }
     //*****************************************
  //Obsługa man V
-digitalWrite(  pin_E1_man1, HIGH); 
+digitalWrite(  pin_E1_man1, HIGH);
 digitalWrite( pin_E1_man2, HIGH);
-digitalWrite( pin_E1_man3,  HIGH); 
+digitalWrite( pin_E1_man3,  HIGH);
 digitalWrite( pin_E1_man4, HIGH);
 digitalWrite( pin_E1_man5, LOW);//  właczenie III man do odczytu
 channel_on = 0x94; // ustawienie kanałów dla IV  man - kanal 4
@@ -488,11 +473,11 @@ channel_off = 0x84; // kanal 5
       for (int i = 0; i <= 7; i++) {
       Key5[i+1*8] = digitalRead(pin_data[i]);
      }
-  
+ 
   digitalWrite(pin_adress0, LOW);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 3-st (thrid) octet
-  
+ 
       for (int i = 0; i <= 7; i++) {
       Key5[i+2*8] = digitalRead(pin_data[i]);
      }
@@ -500,7 +485,7 @@ channel_off = 0x84; // kanal 5
   digitalWrite(pin_adress0, HIGH);
   digitalWrite(pin_adress1,  HIGH);
   digitalWrite(pin_adress2, LOW); // read 4-st (quad) octet
-  
+ 
    for (int i = 0; i <= 7; i++) {
       Key5[i+3*8] = digitalRead(pin_data[i]);
      }
@@ -530,12 +515,12 @@ channel_off = 0x84; // kanal 5
    for (int i =  0; i <= 7; i++) {
       Key5[i+7*8] = digitalRead(pin_data[i]);
      }
-  
-  
+ 
+ 
 
 //****************************************************
 // porównywanie  odczytów i wysyłanie komunikatów midi dla man V
-// 
+//
    for (int i = 0; i <=  LiczbaKlawiszy -1; i++) {
     if(Key5[i] != Key5_last[i] ) {
     if(Key5[i]  == 0)  {
@@ -548,7 +533,7 @@ channel_off = 0x84; // kanal 5
   }
   }
   //*****************************************************
-  
+ 
   for (int i =  0; i <= LiczbaKlawiszy -1; i++) {
   Key_last[i] = Key[i];
  }
